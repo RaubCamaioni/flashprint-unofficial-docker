@@ -11,6 +11,8 @@ Security concerns running closed binary software on home systems.
     - As off 8/30/2023 FlashPrint installer not working on Windows11
     - Installation dependencies and install automated
 
+Pre-built avaiable at: https://hub.docker.com/r/raubcamaioni/flashprint-unofficial
+
 ## Choosing FlashPrint Version
 Copy a Linux install url from https://www.flashforge.com/download-center/63  
 and pass to docker build as build argument.
