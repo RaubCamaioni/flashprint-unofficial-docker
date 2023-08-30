@@ -23,18 +23,18 @@ docker build --build-arg FLASHPRINT_URL="https://en.fss.flashforge.com/10000/sof
 ```
 
 ## Mount/Config/GUI
-You will need to mount a local folder/file with 3D files for printing.
-You will also need to mount X11 forwarding for the FlashPrint GUI.
+You will need to mount a local folder/file with 3D files for printing.  
+You will also need to mount X11 forwarding for the FlashPrint GUI.  
 
 For versions newer than 5.X.X (6.x.x not released at current time 8/30/2023)  
-You might need to change the mounting locations to .FlashPrint<major_version_number>.
-No guarantees this docker build will continue to work after version 5. (It should)
+You might need to change the mounting locations to .FlashPrint<major_version_number>.  
+No guarantees this docker build will continue to work after version 5. (It should)  
 
 Configuration are saved at: /home/flashprint/.FlashPrint5  
 Note: The version could change the configuration file location.  
 
-The below command will mount to the home directory.
-Mount persistent configuration directory at ~/.FlashPrint (Optional).
+The below command will mount to the home directory.  
+Mount persistent configuration directory at ~/.FlashPrint (Optional).  
 
 Ensure the mounted directories have permission to read and write.  
 Otherwise, configs will not be saved.  
@@ -50,7 +50,7 @@ docker run -it --rm \
     flashprint
 ```
 
-Alternative command to mount current working directory to /models
+Alternative command to mount current working directory to /models  
 ```
 docker run -it --rm \
     -e DISPLAY \
@@ -68,7 +68,7 @@ Limit the network access of the docker container.
 Only allow access to 3D printer.  
 Improves security running docker on machine with multiple interfaces.  
 
-Create seperate bridge network
+Create seperate bridge network  
 ```
 docker network create flashprint-jail
 docker network ls | grep flashprint-jail
@@ -82,7 +82,7 @@ iptables -I DOCKER-USER -i br-ac3d95d059c2 -j DROP
 iptables -I DOCKER-USER -i br-ac3d95d059c2 -d 10.10.100.254 -j ACCEPT
 ```
 
-Launch with the following command.
+Launch with the following command.  
 ```
 docker run -it --rm \
     --network=flashprint-jail \
@@ -93,9 +93,9 @@ docker run -it --rm \
     flashprint
 ```
 
-You can leave the network bridge configuration indefinitely. 
+You can leave the network bridge configuration indefinitely.  
 Docker system prune will clean it up automatically.  
-To manually remove
+To manually remove  
 ```
 docker network rm flashprint-jail
 ```
