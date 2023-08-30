@@ -13,6 +13,20 @@ Security concerns running closed binary software on home systems.
 
 Pre-built avaiable at: https://hub.docker.com/r/raubcamaioni/flashprint-unofficial
 
+## Quick Start
+pull latest docker  
+```
+docker pull raubcamaioni/flashprint-unofficial
+```
+run docker
+```
+docker run -it --rm \
+    -e DISPLAY \
+    -v /tmp/.X11-unix:/tmp/.X11-unix \
+    -v $(pwd):/models:rw \
+    raubcamaioni/flashprint-unofficial
+```
+
 ## Choosing FlashPrint Version
 Copy a Linux install url from https://www.flashforge.com/download-center/63  
 and pass to docker build as build argument.
