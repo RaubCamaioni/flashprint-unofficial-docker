@@ -2,13 +2,14 @@
 FROM debian:bookworm
 
 # install dependencies
-RUN apt-get update && apt-get install -y \
+RUN apt-get update && apt-get install --no-install-recommends -y \
     wget \
     unzip \
     libglu1-mesa \
     libxi-dev \
     libxmu-dev \
-    libglu1-mesa-dev
+    libglu1-mesa-dev \
+    ca-certificates
 
 # download links available at: https://www.flashforge.com/download-center
 ARG FLASHPRINT_URL="https://en.fss.flashforge.com/10000/software/d9f30e5fad8a33e09039a2ceb0a96dc0.zip" 
@@ -16,14 +17,12 @@ ARG FLASHPRINT_URL="https://en.fss.flashforge.com/10000/software/d9f30e5fad8a33e
 # extract and install deb file
 RUN wget $FLASHPRINT_URL -O /tmp/flashprint.zip
 RUN unzip -p /tmp/flashprint.zip '*.deb' > /tmp/flashprint.deb
-RUN apt-get install -y /tmp/flashprint.deb
+RUN apt-get install --no-install-recommends -y /tmp/flashprint.deb
 
 # remove build dep
-RUN apt-get remove -y wget unzip
-
-# cleanup
-RUN rm -rf /tmp/flashprint.deb /var/lib/apt/lists/* /tmp/* /var/tmp/*
-RUN apt-get clean
+RUN apt-get remove -y wget unzip && \
+    rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* && \
+    apt-get clean
 
 # find FlashPrint executable create entrypoint
 RUN export FLASHPOINT=$(find /usr/share -type f -name 'FlashPrint' -executable) && \
