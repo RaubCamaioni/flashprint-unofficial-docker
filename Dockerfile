@@ -13,10 +13,11 @@ RUN apt-get update && apt-get install --no-install-recommends -y \
 
 # download links available at: https://www.flashforge.com/download-center
 ARG FLASHPRINT_URL="https://en.fss.flashforge.com/10000/software/d9f30e5fad8a33e09039a2ceb0a96dc0.zip" 
-
-# extract and install deb file
-RUN wget $FLASHPRINT_URL -O /tmp/flashprint.zip
-RUN unzip -p /tmp/flashprint.zip '*.deb' > /tmp/flashprint.deb
+RUN EXTENSION=$(basename $FLASHPRINT_URL | rev | cut -d. -f1 | rev) && \
+    wget $FLASHPRINT_URL -O /tmp/flashprint.$EXTENSION && \
+     if [ "$EXTENSION" = "zip" ]; then \
+        unzip -p /tmp/flashprint.$EXTENSION '*.deb' > /tmp/flashprint.deb; \
+    fi
 RUN apt-get install --no-install-recommends -y /tmp/flashprint.deb
 
 # remove build dep
